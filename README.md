@@ -52,3 +52,5 @@ Versions (tags)
   * Started work on transformers.
 
 * 0.5a - Switched backend engine to Socket.IO.
+
+* 0.6a - Added transformers.
