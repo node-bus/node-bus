@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <project name="node-bus" basedir="." default="node-bus">
-	<property name="version" value="0.5a" />
+	<property name="version" value="0.6a" />
 	<property name="build.dir" value="./build" />
 	<property name="client.build.dir" value="${build.dir}/client" />
 	<property name="server.build.dir" value="${build.dir}/server" />
