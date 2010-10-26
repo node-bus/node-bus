@@ -4,3 +4,9 @@
 [submodule "src/client/lib/socket.io"]
 	path = src/client/lib/socket.io
 	url = http://github.com/LearnBoost/Socket.IO.git
+[submodule "src/server/lib/node-router"]
+	path = src/server/lib/node-router
+	url = http://github.com/creationix/node-router.git
+[submodule "apps/lib/node-router"]
+	path = apps/lib/node-router
+	url = http://github.com/creationix/node-router.git

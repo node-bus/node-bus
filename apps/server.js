@@ -1,6 +1,6 @@
 #!/usr/local/bin/node
 
-var router = require('./lib/node-router');
+var router = require('./lib/node-router/lib/node-router');
 var http = require('http');
 var url = require('url');
 var sys = require('sys');
