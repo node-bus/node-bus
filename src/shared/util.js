@@ -1,12 +1,12 @@
 function TransformerEngine() {
-    this.transformers = {};
+    this.transformers = [];
     
     this.process = function(obj) {
         // summary:
         //          Processes an object, running it against each of the
         //          transformers.
         // obj: Object
-        //          The object to transform.
+        //          The event object.
         // return: 
         //          The transformed object.
         
@@ -14,8 +14,7 @@ function TransformerEngine() {
         
         for(var i=0, len=transformers.length; i<len; i++) {
             if(obj == null) break;
-            var result = transformers[i](obj);
-            obj = result;
+            obj = transformers[i](obj);
         }
         
         return obj;
@@ -26,7 +25,7 @@ function TransformerEngine() {
         //          Registers a new transformer.
         // transformer: Function
         //          The transformer to register.
-        this.transformers.append(transformer);
+        this.transformers.push(transformer);
     };
     
     this.unregister = function(transformer) {

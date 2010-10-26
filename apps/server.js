@@ -18,8 +18,16 @@ httpServer.addListener('request', function (req, res) {
     }
 });
 
-busServer.addListener('receive', function(clientId, eventName, payload) {
-    sys.puts('receive: ' + eventName + ", " + payload);
+busServer.addListener('receive', function(clientId, obj) {
+    sys.puts('receive: ' + obj);
+});
+
+busServer.addListener('receiveInvalidMessage', function(clientId, obj) {
+    sys.puts('receive invalid message: ' + obj);
+});
+
+busServer.addListener('receiveInvalidJSON', function(obj) {
+    sys.puts('receive invalid JSON: ' + obj);
 });
 
 busServer.addListener('listen', function(clientId, eventName) {

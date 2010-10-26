@@ -11,6 +11,7 @@
         
         this.socket.addEvent('message', function(data) {
             var json = JSON.parse(data);
+            json = self.transformers.process(json);
             self.pubsub.fireEvent(json.name, json.payload);
         });
     };
