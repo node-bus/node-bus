@@ -34,7 +34,7 @@ function BusServer(httpServer) {
     //Called when a message is received
     self._receive = function(client, obj) {
         //Transform the object
-        obj = self.transformers.process(obj);
+        obj = self.transformers.process(client, obj);
         if(!obj) return;
         
         var eventName = obj.name, payload = obj.payload;

@@ -1,10 +1,13 @@
 function TransformerEngine() {
     this.transformers = [];
     
-    this.process = function(obj) {
+    this.process = function(client, obj) {
         // summary:
         //          Processes an object, running it against each of the
         //          transformers.
+        // client: Object
+        //          The socket.IO object representing the client (should be an
+        //          int)
         // obj: Object
         //          The event object.
         // return: 
@@ -14,7 +17,7 @@ function TransformerEngine() {
         
         for(var i=0, len=transformers.length; i<len; i++) {
             if(obj == null) break;
-            obj = transformers[i](obj);
+            obj = transformers[i](client, obj);
         }
         
         return obj;
