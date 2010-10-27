@@ -33,9 +33,13 @@ function BusServer(httpServer) {
     
     //Called when a message is received
     self._receive = function(client, obj) {
+        self.emit('preTransform', client, obj);
+        
         //Transform the object
         obj = self.transformers.process(client, obj);
         if(!obj) return;
+        
+        self.emit('postTransform', client, obj);
         
         var eventName = obj.name, payload = obj.payload;
         
@@ -98,11 +102,10 @@ function BusServer(httpServer) {
             try {
                 var json = JSON.parse(message);
             } catch(e) {
-                self.emit('receiveInvalidMessage', client, message);
+                self.emit('invalidMessage', client, message);
                 return;
             }
     
-            self.emit('receive', client, json);
             self._receive(client, json);
         });
         
@@ -155,12 +158,15 @@ function BusServer(httpServer) {
     
     //Transformer to ensure that a message is valid
     self.transformers.register(function(client, obj) {
-        var name = obj.name, payload = obj.payload;
-        
-        if(typeof(name) != 'string' || typeof(obj) != 'object') {
-            self.emit('receiveInvalidJSON', obj);
+        var error = function() {
+            self.emit('invalidJSON', client, obj);
             return null;
         }
+        
+        if(typeof(obj) != 'object' || obj == null) return error();
+        
+        var name = obj.name, payload = obj.payload;
+        if(typeof(name) != 'string' || typeof(obj) != 'object' || !obj || !obj.length) return error();
         
         return obj;
     });
