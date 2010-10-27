@@ -91,6 +91,8 @@ function BusServer(httpServer) {
     
     //Called when a user connects
     self._handleConnection = function(client) {
+        self.emit('connect', client);
+        
         //Called when a message is received
         client.addListener('message', function(message) {
             try {
@@ -106,6 +108,8 @@ function BusServer(httpServer) {
         
         //Called when a user disconnects
         client.addListener('disconnect', function() {
+            self.emit('disconnect', client);
+            
             var container = self.clientSubscriptions[client.sessionId];
             if(!container) return;
             
