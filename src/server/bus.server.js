@@ -166,7 +166,7 @@ function BusServer(httpServer) {
         if(typeof(obj) != 'object' || obj == null) return error();
         
         var name = obj.name, payload = obj.payload;
-        if(typeof(name) != 'string' || typeof(obj) != 'object' || !obj || !obj.length) return error();
+        if(typeof(name) != 'string' || typeof(payload) != 'object' || !payload || !payload.length) return error();
         
         return obj;
     });
