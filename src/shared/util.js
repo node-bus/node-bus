@@ -154,7 +154,6 @@ function PubSubClient() {
         //          The payload (arguments) associated with the event.
         
         var container = this.subscriptions[eventName];
-        var payload = [payload];
 
         if(container) {
             for(var key in container) {

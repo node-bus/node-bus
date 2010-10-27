@@ -65,10 +65,10 @@ function BusServer(httpServer) {
         var container = self.clientSubscriptions[clientId];
         if(!container) self.clientSubscriptions[clientId] = container = {};
         
-        var subscription = self.pubsub.subscribe(eventName, function(payload) {
+        var subscription = self.pubsub.subscribe(eventName, function() {
             client.send(JSON.stringify({
                 name: eventName,
-                payload: payload
+                payload: Array.prototype.splice.call(arguments, 0)
             }));
         });
         
@@ -150,10 +150,10 @@ function BusServer(httpServer) {
     self.socketServer.addListener('connection', self._handleConnection);
     
     //Transformer to ensure that a message is valid
-    self.transformers.register(function(obj) {
+    self.transformers.register(function(client, obj) {
         var name = obj.name, payload = obj.payload;
         
-        if(typeof(name) != 'string' || !payload) {
+        if(typeof(name) != 'string' || typeof(obj) != 'object') {
             self.emit('receiveInvalidJSON', obj);
             return null;
         }
