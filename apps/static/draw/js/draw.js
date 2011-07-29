@@ -4,7 +4,7 @@
         //          Creates a new instance of a Draw client. Assumes that 
         //          bus.client.js is already in the dom.
         
-        this.bus = new Bus('http://' + window.location.hostname + ':' + window.location.port);
+        this.bus = getBus();
         this.$canvas = $canvas;
         this.$userList = $userList;
         
