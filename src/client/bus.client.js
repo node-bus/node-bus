@@ -1,15 +1,10 @@
 ;(function(){
-    function Bus(host, port, path) {
-        this.path = path.substr(-1) == '/' ? path : path + '/';
-        io.setPath(this.path + 'socket.io');
-        
-        this.socket = new io.Socket(host, port ? {port: port} : {});
-        this.socket.connect();
-        
+    function Bus(host) {
+        this.socket = new io.Socket(host);
         this.pubsub = new PubSubClient();
         var self = this;
         
-        this.socket.addEvent('message', function(data) {
+        this.socket.on('node-bus', function(data) {
             var json = JSON.parse(data);
             json = self.transformers.process(null, json);
             self.pubsub.fireEvent(json.name, json.payload);
@@ -80,7 +75,7 @@
                 payload: Array.prototype.splice.call(arguments, 1)
             });
             
-            this.socket.send(json);
+            this.socket.emit('node-bus', json);
         },
         
         sub: function() { return this.subscribe.apply(this, arguments); },

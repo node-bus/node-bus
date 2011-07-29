@@ -1,6 +1,6 @@
 var sys = require('sys'),
     events = require("events"),
-    io = require('./socket.io');
+    io = require('socket.io');
     
 var RESERVED_EVENT_PREFIX = '__node-bus__';
     
@@ -9,13 +9,11 @@ var RESERVED_EVENT_PREFIX = '__node-bus__';
 // description:
 //          Sets up listeners for events on the httpServer object when they
 //          match the given pattern.
-// httpServer: http.Server
-//          Http Server object.
-// pattern: RegExp
-//          URL pattern to match.
+// port: int
+//          Port to listen on.
 // returns: 
 //          Nothing.
-function BusServer(httpServer) {
+function BusServer(port) {
     events.EventEmitter.call(this);
     var self = this;
     
@@ -26,7 +24,7 @@ function BusServer(httpServer) {
     self.clientSubscriptions = {};
     
     //the socket.io server
-    self.socketServer = io.listen(httpServer);
+    self.io = io.listen(port);
     
     //performs transformations on events
     self.transformers = new TransformerEngine();
@@ -98,7 +96,7 @@ function BusServer(httpServer) {
         self.emit('connect', client);
         
         //Called when a message is received
-        client.addListener('message', function(message) {
+        client.on('node-bus', function(message) {
             try {
                 var json = JSON.parse(message);
             } catch(e) {
@@ -154,7 +152,7 @@ function BusServer(httpServer) {
     
     self.addListener('listen', self._handleListen);
     self.addListener('unlisten', self._handleUnlisten);
-    self.socketServer.addListener('connection', self._handleConnection);
+    self.io.sockets.on('connection', self._handleConnection);
     
     //Transformer to ensure that a message is valid
     self.transformers.register(function(client, obj) {

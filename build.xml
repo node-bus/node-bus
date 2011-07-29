@@ -30,12 +30,12 @@
 	            <pathelement location="./src/client/bus.client.js"/>
 			</path>
 		</concat>
+		
     	<jsmin destdir="${client.build.dir}" srcfile="${client.build.dir}/bus.client.js" suffix="true" copyright="${copyright}" />
 
 		<copy todir="${client.build.dir}/socket.io/">
-			<fileset dir="./src/client/lib/socket.io/">
-				<include name="*.js" />
-				<include name="lib/**" />
+			<fileset dir="./src/client/lib/socket.io-client/">
+				<include name="dist/**" />
 			</fileset>
 		</copy>
 	</target>
@@ -50,13 +50,6 @@
 	            <pathelement location="./src/server/bus.server.js"/>
 			</path>
 		</concat>
-		
-		<copy todir="${server.build.dir}/socket.io">
-			<fileset dir="./src/server/lib/socket.io-node/">
-				<include name="*.js" />
-				<include name="lib/**" />
-			</fileset>
-		</copy>
 	</target>
     
     <target name="build">
