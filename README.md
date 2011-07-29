@@ -11,7 +11,11 @@ the comet requests to make the developer's job as easy as possible.
 Setting Things Up
 =================
 
-First download the node-bus repository:
+Ensure that you have socket.io:
+
+    npm install socket.io
+
+Download the node-bus repository:
 
     git clone git@github.com:node-bus/node-bus.git --recursive
     cd node-bus
